@@ -1,6 +1,8 @@
 language: go
 services:
   - docker
+  
+sudo: false
 
 install:
   - go get github.com/constabulary/gb/...
