@@ -1,7 +1,9 @@
+language: go
 services:
   - docker
 
 install:
+  - go get github.com/constabulary/gb/...
   - make build
   - make docker-image
   - make docker-run
