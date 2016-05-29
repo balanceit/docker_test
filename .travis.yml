@@ -6,7 +6,7 @@ install:
   - go get github.com/constabulary/gb/...
   - make build
   - make docker-image
-  - make docker-run
+  - make docker-run-deamon
 
 script:
   - docker ps | grep -q go_web_server

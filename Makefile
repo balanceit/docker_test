@@ -12,3 +12,6 @@ docker-image:
 
 docker-run:
 	docker run --rm -it -p 8000:8080 --log-driver json-file --name $(CONTAINER_NAME) $(IMAGE_NAME)
+
+docker-run-deamon:
+	docker run -d -p 8000:8080 --log-driver json-file --name  $(CONTAINER_NAME) $(IMAGE_NAME)
