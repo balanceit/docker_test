@@ -1,14 +1,14 @@
 language: go
 services:
   - docker
-  
+
 sudo: false
 
 install:
   - go get github.com/constabulary/gb/...
   - make build
   - make docker-image
-  - make docker-run-deamon
+  - make docker-run-daemon
 
 script:
   - docker ps | grep -q go_web_server
