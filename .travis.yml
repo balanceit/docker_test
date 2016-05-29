@@ -17,4 +17,4 @@ install:
 
 script:
   - docker ps | grep -q go_web_server
-  - bash test.sh
+  - make test

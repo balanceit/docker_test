@@ -15,3 +15,6 @@ docker-run:
 
 docker-run-daemon:
 	docker run -d -p 8000:8080 --log-driver json-file --name  $(CONTAINER_NAME) $(IMAGE_NAME)
+
+test:
+	bash test.sh
