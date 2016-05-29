@@ -1,15 +1,30 @@
 package main
 
 import(
-  "fmt"
   "log"
+  "encoding/json"
   "net/http"
   "runtime"
 )
 
+type Response struct {
+  Status    string
+  Runtime   string
+  Arch      string
+}
+
 func indexHandler( w http.ResponseWriter, r *http.Request){
   log.Println("indexHandler")
-  fmt.Fprintf(w, "hello world, I'm running on %s with an %s CPU ", runtime.GOOS,runtime.GOARCH)
+  res := Response{"OK", runtime.GOOS, runtime.GOARCH}
+
+  js, err := json.Marshal(res)
+  if err != nil {
+    http.Error(w, err.Error(), http.StatusInternalServerError)
+    return
+  }
+
+  w.Header().Set("Content-Type", "application/json")
+  w.Write(js)
 }
 
 func main(){
