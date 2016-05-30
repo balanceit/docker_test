@@ -27,3 +27,6 @@
 ## building a small container
 * see the `.travis.yml`
 * from https://blog.codeship.com/building-minimal-docker-containers-for-go-applications/
+
+### building static executable
+* `GOPATH=/path/to/gb/project/vendor:/path/to/gb/project CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -ldflags '-w -extld ld -extldflags -static' -a -x .``
