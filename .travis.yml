@@ -9,7 +9,8 @@ services:
 sudo: false
 
 install:
-  - go get github.com/constabulary/gb/...
+  # not using gb atm as it does not have support for static linking
+  #- go get github.com/constabulary/gb/...
   - make build-linux
   - make docker-image
   - make docker-run-daemon
