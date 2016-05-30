@@ -9,6 +9,7 @@ build:
 
 build-linux:
 	CGO_ENABLED=0 GOOS=linux gb build web/...
+	ls -la bin
 
 clean:
 	rm -r bin
