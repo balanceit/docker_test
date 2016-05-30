@@ -9,7 +9,6 @@ build:
 
 build-linux:
 	CGO_ENABLED=0 GOOS=linux gb build web/...
-	mv bin/web-linux-amd64 bin/web
 
 clean:
 	rm -r bin
