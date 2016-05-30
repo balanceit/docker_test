@@ -9,7 +9,7 @@ build:
 
 build-linux:
 	# CGO_ENABLED=0 GOOS=linux gb build web/...
-	GOPATH=$(pwd) CGO_ENABLED=0 GOOS=linux go build -o bin/web -a -installsuffix cgo -ldflags '-w -extld ld -extldflags -static' -a -x web/...
+	GOPATH=$(pwd) CGO_ENABLED=0 GOOS=linux go build -o bin/web -a -installsuffix cgo -ldflags '-w -extld ld -extldflags -static' -a -x src/web/main.go
 	ls -la bin
 
 clean:
