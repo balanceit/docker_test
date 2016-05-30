@@ -7,6 +7,14 @@ all: build docker-image
 build:
 	gb build web/...
 
+build-linux:
+	CGO_ENABLED=0 GOOS=linux gb build web/...
+	mv bin/web-linux-amd64 bin/web
+
+clean:
+	rm -r bin
+	rm -r pkg
+
 docker-image:
 	docker build -t $(IMAGE_NAME) .
 

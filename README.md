@@ -4,16 +4,19 @@
 
 ## Requirements
 
-* boot2docker installed
+* ~boot2docker installed~
+* docker machine is installed
 * go build is installed
 
 ## Set up
-
-* Start boot2docker
-`boot2docker up`
+* `boot2docker down` -- shutdown if running
+* `brew cask install dockertoolbox` -- installs docker machine and the lastest version of virtual box
+* `docker-machine create --driver virtualbox docker-vm` -- create a new VM and machine named *docker-vm*
+* `eval $(docker-machine env docker-vm)` -- add needed env variables
+* `docker ps` -- just a quick test to ensure it is working
 
 * Setup the image to forward port 8000
-`VBoxManage controlvm "boot2docker-vm" natpf1 "tcp-port8000,tcp,,8000,,8000";`
+`VBoxManage controlvm "docker-vm" natpf1 "tcp-port8000,tcp,,8000,,8000";`
 
 * run the default make task
 `make`

@@ -1,6 +1,4 @@
-FROM golang
-
-ADD . /go/
-RUN go install web
-ENTRYPOINT /go/bin/web
+FROM scratch
+ADD ./bin/web /
 EXPOSE 8080
+CMD ["/web"]

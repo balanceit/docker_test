@@ -10,6 +10,7 @@ sudo: false
 
 install:
   - go get github.com/constabulary/gb/...
+  - make build-linux
   - make docker-image
   - make docker-run-daemon
 
