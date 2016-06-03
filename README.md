@@ -66,7 +66,7 @@ at the end we will have
 `securityGroupId=sg-fcfe4698`
 `securityGroupName=test-seav-security-group`
 
-
+### the shell commands
 
 * create the VPC
 `aws ec2 create-vpc --cidr-block 10.0.0.0/22`
