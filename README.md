@@ -147,25 +147,40 @@ aws ec2 authorize-security-group-ingress --group-id $securityGroupId --protocol 
 aws ec2 authorize-security-group-ingress --group-id $securityGroupId --protocol tcp --port 8000 --cidr 0.0.0.0/0
 ```
 
+### ec2 docker host instance
 * create an instance for holding our docker containers
 ```
 docker-machine create --driver amazonec2 --amazonec2-region ap-southeast-2 --amazonec2-vpc-id $vpcId --amazonec2-subnet-id $subnetId --amazonec2-security-group $securityGroupName test-seav-container-host
-
+```
+### hook up to that insstance
+* set the needed env vars
+```
 docker-machine env test-seav-container-host
-
 eval $(docker-machine env test-seav-container-host)
-
+```
+* check it is working
+```
 docker-machine ls
+```
 
+* get the ec2 instances ip address
+```
 docker-machine ip test-seav-container-host
+```
 
+### build and run the docker image/container
+* build the image from local `DockerFile`
+```
 docker build -t testing_image .
-
+```
+* run the container
+```
 docker run -d -p 8000:8080 --log-driver json-file --name testing_container testing_image
+```
 
+### shutdown and clean up
+```
 docker-machine stop container-host
-
 docker-machine rm container-host
-
-
+... plus delete the aws stuff ....
 ```
