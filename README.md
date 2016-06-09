@@ -18,9 +18,25 @@
 * Setup the image to forward port 8000
 `VBoxManage controlvm "docker-vm" natpf1 "tcp-port8000,tcp,,8000,,8000";`
 
+### to start and stop
+* `docker-machine start docker-vm`
+* `docker-machine stop docker-vm`
+
+#### The "Something went wrong running an SSH command" error
+
+Too many retries waiting for SSH to be available.  Last error: Maximum number of retries (60) exceeded
+Error checking TLS connection: Something went wrong running an SSH command!
+
+see: https://github.com/docker/toolbox/issues/317
+
+* `docker-machine rm docker-vm`
+* `docker-machine create --driver virtualbox docker-vm`
+* `eval $(docker-machine env docker-vm)`
+
+### building the application
 * run the default make task
 `make`
- * this will build an executable `web` from the `src\web` package
+ * this will build an executable `main` from the `src\main` package
  * build a docker image defined by `IMAGE_NAME` (defaults to `docker_test`)
  * run a docker container publishing the exposed port 8080 -> 8000 (see `./Dockerfile`) and a container name defined by `CONTAINER_NAME` (this defaults to `go_web_server`)
 
@@ -79,7 +95,7 @@ Last IP	10.0.3.255
 Total Host	1024
   ```
   * there is the option to run something like the below for better scripting
-  `vpcId=`aws ec2 create-vpc --cidr-block 10.0.0.0/28 --query 'Vpc.VpcId' --output text``
+  `vpcId=`aws ec2 create-vpc --cidr-block 10.0.0.0/22 --query 'Vpc.VpcId' --output text``
   * note the use of `--query` and `--output`
 
 * to enable dns (did not do this)
@@ -183,4 +199,59 @@ docker run -d -p 8000:8080 --log-driver json-file --name testing_container testi
 docker-machine stop container-host
 docker-machine rm container-host
 ... plus delete the aws stuff ....
+```
+
+
+## RDS creation
+
+### security group
+
+aws ec2 create-security-group --group-name test-seav-db-security-group --description "Security group for testing database" --vpc-id $vpcId
+securityGroupDBId=xxxxx
+aws ec2 authorize-security-group-ingress --group-id $securityGroupId --protocol tcp --port 5432 --cidr 10.0.0.0/22
+aws rds create-db-instance --db-name SeavTest --db-instance-identifier test-seav-db --allocated-storage 5 --db-instance-class db.t1.micro --engine POSTGRES --master-username root --master-user-password somepassword --vpc-security-group-ids $securityGroupDBId
+aws rds describe-db-instances
+
+
+
+______________________
+aws ec2 modify-instance-attribute \
+    --instance-id i-95bd36aa \
+    --groups sg-8a051ee8 sg-c53b20a7
+______________________
+
+
+
+## Database migrations
+
+### Preconditions
+
+### thoughts
+http://aranair.github.io/posts/2016/04/27/golang-docker-postgres-digital-ocean/
+
+
+### Preconditions
+* have go-bindata installed
+* `gb vendor fetch github.com/rubenv/sql-migrate`
+* `create database docker_test;`
+* `create database docker_test_test;`
+* `create database docker_test_developement;`
+* `go-bindata -pkg myapp -o bindata.go db/migrations/`
+
+We are using [goose](https://github.com/ox/goose) to manage db migrations (note, this is not to be confused with https://bitbucket.org/liamstask/goose).
+
+To install:
+```
+go get github.com/ox/goose/cmd/goose
+```
+This will add a `goose` executable to your `$GOPATH/bin` directory.
+
+To create the database as defined in the `db/dbconf.yml` file (the `development` environment is the default, to change use the `-env="environment"` switch):
+```
+ goose create-db
+```
+
+To then run outstanding migrations:
+```
+ goose up
 ```
