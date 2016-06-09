@@ -11,6 +11,7 @@ sudo: false
 
 before_script:
   - psql -c 'create database docker_test;' -U postgres
+  - go get -u github.com/jteeuwen/go-bindata/...
 
 install:
   # not using gb atm as it does not have support for static linking
