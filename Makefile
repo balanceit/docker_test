@@ -1,7 +1,7 @@
 IMAGE_NAME ?= docker_test
 CONTAINER_NAME ?= go_web_server
+GBGOPATH ?= $(shell pwd):$(shell pwd)/vendor
 .DEFAULT_GOAL := run
-GOPATH ?= $(shell pwd):$(shell pwd)/vendor
 
 run: build
 	bin/main
@@ -16,7 +16,7 @@ build: clean bindata
 
 build-linux: clean bindata
 	# CGO_ENABLED=0 GOOS=linux gb build main/...
-	GOPATH=$(GOPATH) CGO_ENABLED=0 GOOS=linux go build -o bin/main -a -installsuffix cgo -ldflags '-w -extld ld -extldflags -static' -a -x main
+	GOPATH=$(GBGOPATH) CGO_ENABLED=0 GOOS=linux go build -o bin/main -a -installsuffix cgo -ldflags '-w -extld ld -extldflags -static' -a -x main
 	ls -la bin
 
 clean:
