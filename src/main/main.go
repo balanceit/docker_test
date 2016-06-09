@@ -17,30 +17,30 @@ type Response struct {
   Arch      string
   Tables    []string
 }
-//
-// func listTables(c *sql.DB) ([]string, error){
-//   var tables []string
-//
-//   rows, err := c.Query(`select table_name from information_schema.tables where table_schema= 'public';`)
-//   if err != nil {
-//     return nil, err
-//   }
-//   defer rows.Close()
-//
-//   for rows.Next() {
-//     var table string
-//     err = rows.Scan(&table)
-//     if err != nil {
-//       return nil, err
-//     }
-//     tables = append(tables, table)
-//   }
-//   err = rows.Err()
-//   if err != nil {
-//     return nil, err
-//   }
-//   return tables, nil
-// }
+
+func listTables(c *sql.DB) ([]string, error){
+  var tables []string
+
+  rows, err := c.Query(`select table_name from information_schema.tables where table_schema= 'public';`)
+  if err != nil {
+    return nil, err
+  }
+  defer rows.Close()
+
+  for rows.Next() {
+    var table string
+    err = rows.Scan(&table)
+    if err != nil {
+      return nil, err
+    }
+    tables = append(tables, table)
+  }
+  err = rows.Err()
+  if err != nil {
+    return nil, err
+  }
+  return tables, nil
+}
 
 func migrations() migrate.MigrationSource {
         return &migrate.AssetMigrationSource{
@@ -54,14 +54,14 @@ func indexHandler(client *sql.DB) func(w http.ResponseWriter, r *http.Request) {
     return func(w http.ResponseWriter, r *http.Request) {
     log.Println("indexHandler")
 
-    // tables, err := listTables(client)
-    // if err != nil {
-    //   http.Error(w, err.Error(), http.StatusInternalServerError)
-    //   return
-    // }
-    // log.Println(tables)
-    // res := Response{"OK", runtime.GOOS, runtime.GOARCH, tables }
-    res := Response{"OK", runtime.GOOS, runtime.GOARCH, []string{"testing"} }
+    tables, err := listTables(client)
+    if err != nil {
+      http.Error(w, err.Error(), http.StatusInternalServerError)
+      return
+    }
+    log.Println(tables)
+    res := Response{"OK", runtime.GOOS, runtime.GOARCH, tables }
+    // res := Response{"OK", runtime.GOOS, runtime.GOARCH, []string{"testing"} }
 
     js, err := json.Marshal(res)
     if err != nil {
@@ -77,16 +77,16 @@ func indexHandler(client *sql.DB) func(w http.ResponseWriter, r *http.Request) {
 
 func main(){
 
-	client, err := sql.Open("postgres", "dbname=docker_test_developement user=postgres password='' slmode=disable")
+	client, err := sql.Open("postgres", "dbname=docker_test_developement user=postgres password='' sslmode=disable")
 	if err != nil {
 		log.Fatal("cannot connect to database: ", err)
 	}
-  //
-  // n, err := migrate.Exec(client, "postgres", migrations(), migrate.Up)
-  // if err != nil {
-  //     log.Fatal("db migrations failed: ", err)
-  // }
-  // log.Println(n, "migrations run")
+  
+  n, err := migrate.Exec(client, "postgres", migrations(), migrate.Up)
+  if err != nil {
+      log.Fatal("db migrations failed: ", err)
+  }
+  log.Println(n, "migrations run")
 
 	log.SetPrefix("web_server:")
   http.HandleFunc("/", indexHandler(client))
