@@ -27,10 +27,10 @@ docker-image:
 	docker build -t $(IMAGE_NAME) .
 
 docker-run:
-	docker run --rm -it --log-driver json-file --name $(CONTAINER_NAME) $(IMAGE_NAME)
+	docker run --rm -it -p 8000:8080 --log-driver json-file --name $(CONTAINER_NAME) $(IMAGE_NAME)
 
 docker-run-daemon:
-	docker run -d --log-driver json-file --name  $(CONTAINER_NAME) $(IMAGE_NAME)
+	docker run -d -p 8000:8080 --log-driver json-file --name  $(CONTAINER_NAME) $(IMAGE_NAME)
 
 test:
 	bash test.sh
