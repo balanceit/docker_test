@@ -77,18 +77,18 @@ func indexHandler(client *sql.DB) func(w http.ResponseWriter, r *http.Request) {
 
 func main(){
 
-	client, err := sql.Open("postgres", "dbname=docker_test_developement user=postgres password='' sslmode=disable")
-	if err != nil {
-		log.Fatal("cannot connect to database: ", err)
-	}
-  
+  client, err := sql.Open("postgres", "dbname=docker_test_developement user=postgres password='' sslmode=disable")
+  if err != nil {
+    log.Fatal("cannot connect to database: ", err)
+  }
+
   n, err := migrate.Exec(client, "postgres", migrations(), migrate.Up)
   if err != nil {
       log.Fatal("db migrations failed: ", err)
   }
   log.Println(n, "migrations run")
 
-	log.SetPrefix("web_server:")
+  log.SetPrefix("web_server:")
   http.HandleFunc("/", indexHandler(client))
   http.ListenAndServe(":8080",nil)
   log.Println("running on port 8080")
