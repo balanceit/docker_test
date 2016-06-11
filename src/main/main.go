@@ -81,6 +81,7 @@ func main(){
   if err != nil {
     log.Fatal("cannot connect to database: ", err)
   }
+  log.Println("connected to database")
 
   n, err := migrate.Exec(client, "postgres", migrations(), migrate.Up)
   if err != nil {

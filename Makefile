@@ -1,8 +1,8 @@
 IMAGE_NAME ?= docker_test
 CONTAINER_NAME ?= go_web_server
 GBGOPATH ?= $(shell pwd):$(shell pwd)/vendor
-CONTAINER_PGPORT ?= 5432
-CONTAINER_PGHOST ?= localhost
+CONTAINER_PGPORT ?= $(PGPORT)
+CONTAINER_PGHOST ?= $(PGHOST)
 
 .DEFAULT_GOAL := run
 
@@ -30,10 +30,6 @@ docker-image:
 	docker build -t $(IMAGE_NAME) .
 
 docker-run:
-	# docker run --rm -it -p 8000:8080 --log-driver json-file --name $(CONTAINER_NAME) $(IMAGE_NAME)
-	# docker run --rm -it -P --log-driver json-file --name $(CONTAINER_NAME) $(IMAGE_NAME)
-	# docker run --rm -it -P --log-driver json-file --name $(CONTAINER_NAME) $(IMAGE_NAME)
-	# docker run --rm -it -p 8000:8080 --add-host localhost:172.17.0.1 --log-driver json-file --name $(CONTAINER_NAME) $(IMAGE_NAME)
 	docker run --rm -it -p 8000:8080 -e PGPORT=$(CONTAINER_PGPORT) -e PGHOST=$(CONTAINER_PGHOST) --log-driver json-file --name $(CONTAINER_NAME) $(IMAGE_NAME)
 
 docker-run-daemon:

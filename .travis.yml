@@ -7,7 +7,7 @@ services:
   - docker
   - postgresql
 
-sudo: false
+sudo: required
 
 before_script:
   - ifconfig
@@ -21,6 +21,10 @@ install:
   - make build-linux
   - make docker-image
   - make docker-run-daemon
+  - echo $PGHOST
+  - echo $PGPORT
+  - docker logs go_web_server
+
 
 script:
   - docker ps
