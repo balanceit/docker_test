@@ -20,13 +20,13 @@ install:
   #- go get github.com/constabulary/gb/...
   - make build-linux
   - make docker-image
-  - make docker-run-daemon
   - echo $PGHOST
   - echo $PGPORT
+  - make docker-run-daemon
   - docker logs go_web_server
 
 
 script:
-  - docker ps
+  - docker ps -a
   - docker ps | grep -q go_web_server
   - make test

@@ -83,6 +83,10 @@ func main(){
   }
   log.Println("connected to database")
 
+  if err2 := client.Ping(); err2 != nil {
+   log.Println("Failed to keep connection alive")
+  }
+
   n, err := migrate.Exec(client, "postgres", migrations(), migrate.Up)
   if err != nil {
       log.Fatal("db migrations failed: ", err)
