@@ -1,8 +1,8 @@
 IMAGE_NAME ?= docker_test
 CONTAINER_NAME ?= go_web_server
 GBGOPATH ?= $(shell pwd):$(shell pwd)/vendor
-CONTAINER_PGPORT ?= $(PGPORT)
-CONTAINER_PGHOST ?= $(PGHOST)
+CONTAINER_PGPORT ?= 5432
+CONTAINER_PGHOST ?= localhost
 
 .DEFAULT_GOAL := run
 
