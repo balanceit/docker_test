@@ -184,3 +184,5 @@ docker-machine stop container-host
 docker-machine rm container-host
 ... plus delete the aws stuff ....
 ```
+
+# Docker Repositories
