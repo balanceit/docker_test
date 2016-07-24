@@ -5,16 +5,28 @@ go:
 
 services:
   - docker
+  - postgresql
 
-sudo: false
+sudo: required
+
+before_script:
+  - ifconfig
 
 install:
+  - psql -c 'create database docker_test;' -U postgres
+  - go get -u github.com/jteeuwen/go-bindata/...
+
   # not using gb atm as it does not have support for static linking
   #- go get github.com/constabulary/gb/...
   - make build-linux
   - make docker-image
+  - echo $PGHOST
+  - echo $PGPORT
   - make docker-run-daemon
+  - docker logs go_web_server
+
 
 script:
+  - docker ps -a
   - docker ps | grep -q go_web_server
   - make test

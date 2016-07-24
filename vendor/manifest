@@ -1,0 +1,132 @@
+{
+	"version": 0,
+	"dependencies": [
+		{
+			"importpath": "github.com/armon/go-radix",
+			"repository": "https://github.com/armon/go-radix",
+			"revision": "4239b77079c7b5d1243b7b4736304ce8ddb6f0f2",
+			"branch": "master"
+		},
+		{
+			"importpath": "github.com/bgentry/speakeasy",
+			"repository": "https://github.com/bgentry/speakeasy",
+			"revision": "e1439544d8ecd0f3e9373a636d447668096a8f81",
+			"branch": "master"
+		},
+		{
+			"importpath": "github.com/denisenkom/go-mssqldb",
+			"repository": "https://github.com/denisenkom/go-mssqldb",
+			"revision": "e291d7fd2204827b9964304c46ec21c330573faf",
+			"branch": "master"
+		},
+		{
+			"importpath": "github.com/go-sql-driver/mysql",
+			"repository": "https://github.com/go-sql-driver/mysql",
+			"revision": "3654d25ec346ee8ce71a68431025458d52a38ac0",
+			"branch": "master"
+		},
+		{
+			"importpath": "github.com/kylelemons/go-gypsy/yaml",
+			"repository": "https://github.com/kylelemons/go-gypsy",
+			"revision": "42fc2c7ee9b8bd0ff636cd2d7a8c0a49491044c5",
+			"branch": "master",
+			"path": "/yaml"
+		},
+		{
+			"importpath": "github.com/lib/pq",
+			"repository": "https://github.com/lib/pq",
+			"revision": "ee1442bda7bd1b6a84e913bdb421cb1874ec629d",
+			"branch": "master"
+		},
+		{
+			"importpath": "github.com/mattn/go-isatty",
+			"repository": "https://github.com/mattn/go-isatty",
+			"revision": "56b76bdf51f7708750eac80fa38b952bb9f32639",
+			"branch": "master"
+		},
+		{
+			"importpath": "github.com/mattn/go-runewidth",
+			"repository": "https://github.com/mattn/go-runewidth",
+			"revision": "d6bea18f789704b5f83375793155289da36a3c7f",
+			"branch": "master"
+		},
+		{
+			"importpath": "github.com/mattn/go-sqlite3",
+			"repository": "https://github.com/mattn/go-sqlite3",
+			"revision": "38ee283dabf11c9cbdb968eebd79b1fa7acbabe6",
+			"branch": "master"
+		},
+		{
+			"importpath": "github.com/mitchellh/cli",
+			"repository": "https://github.com/mitchellh/cli",
+			"revision": "168daae10d6ff81b8b1201b0a4c9607d7e9b82e3",
+			"branch": "master"
+		},
+		{
+			"importpath": "github.com/olekukonko/tablewriter",
+			"repository": "https://github.com/olekukonko/tablewriter",
+			"revision": "8d0265a48283795806b872b4728c67bf5c777f20",
+			"branch": "master"
+		},
+		{
+			"importpath": "github.com/ox/goose/cmd/goose",
+			"repository": "https://github.com/ox/goose",
+			"revision": "b1283f6c0d7da1f4cd82de4d11c35f7a3988fe5b",
+			"branch": "master",
+			"path": "/cmd/goose"
+		},
+		{
+			"importpath": "github.com/ox/goose/lib/goose",
+			"repository": "https://github.com/ox/goose",
+			"revision": "b1283f6c0d7da1f4cd82de4d11c35f7a3988fe5b",
+			"branch": "master",
+			"path": "/lib/goose"
+		},
+		{
+			"importpath": "github.com/rubenv/sql-migrate",
+			"repository": "https://github.com/rubenv/sql-migrate",
+			"revision": "51aa4cacd5b4e5793f3713fcbc2c12d2fb8cc4ec",
+			"branch": "master"
+		},
+		{
+			"importpath": "github.com/ziutek/mymysql/godrv",
+			"repository": "https://github.com/ziutek/mymysql",
+			"revision": "e5d54ebfda3f8a15e7b192b65c2aa10cb4fd7e04",
+			"branch": "master",
+			"path": "/godrv"
+		},
+		{
+			"importpath": "github.com/ziutek/mymysql/mysql",
+			"repository": "https://github.com/ziutek/mymysql",
+			"revision": "e5d54ebfda3f8a15e7b192b65c2aa10cb4fd7e04",
+			"branch": "master",
+			"path": "/mysql"
+		},
+		{
+			"importpath": "github.com/ziutek/mymysql/native",
+			"repository": "https://github.com/ziutek/mymysql",
+			"revision": "e5d54ebfda3f8a15e7b192b65c2aa10cb4fd7e04",
+			"branch": "master",
+			"path": "/native"
+		},
+		{
+			"importpath": "golang.org/x/crypto/md4",
+			"repository": "https://go.googlesource.com/crypto",
+			"revision": "77f4136a99ffb5ecdbdd0226bd5cb146cf56bc0e",
+			"branch": "master",
+			"path": "/md4"
+		},
+		{
+			"importpath": "gopkg.in/gorp.v1",
+			"repository": "https://gopkg.in/gorp.v1",
+			"revision": "c87af80f3cc5036b55b83d77171e156791085e2e",
+			"branch": "master"
+		},
+		{
+			"importpath": "gopkg.in/yaml.v1",
+			"repository": "https://gopkg.in/yaml.v1",
+			"revision": "9f9df34309c04878acc86042b16630b0f696e1de",
+			"branch": "v1"
+		}
+	]
+}

@@ -1,4 +1,5 @@
 FROM scratch
-ADD ./bin/web /
+#FROM ubuntu
+ADD ./bin/main /bin/
 EXPOSE 8080
-CMD ["/web"]
+CMD ["/bin/main"]

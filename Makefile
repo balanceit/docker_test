@@ -1,29 +1,42 @@
 IMAGE_NAME ?= docker_test
 CONTAINER_NAME ?= go_web_server
-.DEFAULT_GOAL := all
+GBGOPATH ?= $(shell pwd):$(shell pwd)/vendor
+# CONTAINER_PGPORT ?= 5432
+CONTAINER_PGHOST ?= localhost
 
-all: build docker-image
+.DEFAULT_GOAL := run
 
-build:
-	gb build web/...
+run: build
+	bin/main
 
-build-linux:
-	# CGO_ENABLED=0 GOOS=linux gb build web/...
-	GOPATH=$(pwd) CGO_ENABLED=0 GOOS=linux go build -o bin/web -a -installsuffix cgo -ldflags '-w -extld ld -extldflags -static' -a -x src/web/main.go
+run-docker: build-linux docker-image docker-run
+
+bindata:
+	go-bindata -o src/main/bindata.go db/migrations/
+
+build: clean bindata
+	gb build main/...
+
+build-linux: clean bindata
+	# CGO_ENABLED=0 GOOS=linux gb build main/...
+	GOPATH=$(GBGOPATH) CGO_ENABLED=0 GOOS=linux go build -o bin/main -a -installsuffix cgo -ldflags '-w -extld ld -extldflags -static' -a -x main
 	ls -la bin
 
 clean:
-	rm -r bin
-	rm -r pkg
+	if [ -a bin ]; then rm -rf bin; fi;
+	if [ -a pkg ]; then rm -rf pkg; fi;
 
 docker-image:
 	docker build -t $(IMAGE_NAME) .
 
 docker-run:
-	docker run --rm -it -p 8000:8080 --log-driver json-file --name $(CONTAINER_NAME) $(IMAGE_NAME)
+	# docker run --rm -it -p 8000:8080 -e PGPORT=$(CONTAINER_PGPORT) -e PGHOST=$(CONTAINER_PGHOST) --log-driver json-file --name $(CONTAINER_NAME) $(IMAGE_NAME)
+	docker run --rm -it -p 8000:8080 -e PGHOST=$(CONTAINER_PGHOST) --log-driver json-file --name $(CONTAINER_NAME) $(IMAGE_NAME)
 
 docker-run-daemon:
-	docker run -d -p 8000:8080 --log-driver json-file --name  $(CONTAINER_NAME) $(IMAGE_NAME)
+	docker run -d -p 8000:8080 -e PGHOST=$(CONTAINER_PGHOST) --log-driver json-file --name  $(CONTAINER_NAME) $(IMAGE_NAME)
 
 test:
 	bash test.sh
+
+dbcreate:
