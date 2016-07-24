@@ -204,8 +204,6 @@ docker-machine rm container-host
 ... plus delete the aws stuff ....
 ```
 
-<<<<<<< HEAD
-
 ## RDS creation
 
 ### security group
@@ -216,14 +214,11 @@ aws ec2 authorize-security-group-ingress --group-id $securityGroupId --protocol 
 aws rds create-db-instance --db-name SeavTest --db-instance-identifier test-seav-db --allocated-storage 5 --db-instance-class db.t1.micro --engine POSTGRES --master-username root --master-user-password somepassword --vpc-security-group-ids $securityGroupDBId
 aws rds describe-db-instances
 
-
-
 ______________________
 aws ec2 modify-instance-attribute \
     --instance-id i-95bd36aa \
     --groups sg-8a051ee8 sg-c53b20a7
 ______________________
-
 
 
 ## Database migrations
@@ -262,3 +257,48 @@ To then run outstanding migrations:
 
 # Docker Repositories
 docker run -d   --name watchtower   -v /var/run/docker.sock:/var/run/docker.sock   centurylink/watchtower
+
+
+# Docker tutum
+This will allow us to connect docker hub repo with a deployment location
+https://docs.docker.com/docker-cloud/infrastructure/link-aws/
+
+## AWS Setup
+* link aws account with docker cloud
+* create a docker cloud user in IAM
+* `dockercloud-user` (save the access key id and secret)
+* Create a new policy for this docker cloud user dockercloud-user
+* Create your own policy: `dockercloud-policy`
+```
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": [
+        "ec2:*",
+        "iam:ListInstanceProfiles"
+      ],
+      "Effect": "Allow",
+      "Resource": "*"
+    }
+  ]
+}
+```
+* now attach the policy to the user (my goodness aws is tedious)
+
+## Docker cloud setup
+* in Cloud settings add the creds from the above user to the "Amazon Web Services" under "Cloud providers"
+
+### Create nodes and node clusters
+https://docs.docker.com/docker-cloud/getting-started/your_first_node/
+* Create a node in ap-southeast-2
+* use `vpc-b8d389dd` created above
+* and subnet `subnet-4b09373c` from above
+* choose the nano size
+* 10 GB (is the smallest)
+* 1 node
+* Launch the node cluster
+
+### Services
+https://docs.docker.com/docker-cloud/getting-started/your_first_service/
+ in docker cloud talk a *Service* is a group of containers from the same image
