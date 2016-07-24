@@ -15,8 +15,11 @@
 * `eval $(docker-machine env docker-vm)` -- add needed env variables
 * `docker ps` -- just a quick test to ensure it is working
 
-* Setup the image to forward port 8000
+* Setup the VM to forward port 8000 for the test web server
 `VBoxManage controlvm "docker-vm" natpf1 "tcp-port8000,tcp,,8000,,8000";`
+
+* Setup the VM to forward port 5432 for postgres
+`VBoxManage controlvm "docker-vm" natpf1 "tcp-port5432,tcp,,5432,,5432";`
 
 ### to start and stop
 * `docker-machine start docker-vm`

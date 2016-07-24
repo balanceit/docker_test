@@ -84,7 +84,7 @@ func dbMigrations1_create_list_tableSql() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "db/migrations/1_create_list_table.sql", size: 132, mode: os.FileMode(420), modTime: time.Unix(1465468485, 0)}
+	info := bindataFileInfo{name: "db/migrations/1_create_list_table.sql", size: 132, mode: os.FileMode(420), modTime: time.Unix(1469345726, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
@@ -104,7 +104,7 @@ func dbMigrations1_create_show_tableSql() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "db/migrations/1_create_show_table.sql", size: 132, mode: os.FileMode(420), modTime: time.Unix(1465468485, 0)}
+	info := bindataFileInfo{name: "db/migrations/1_create_show_table.sql", size: 132, mode: os.FileMode(420), modTime: time.Unix(1469345726, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
