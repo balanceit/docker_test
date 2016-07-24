@@ -201,6 +201,7 @@ docker-machine rm container-host
 ... plus delete the aws stuff ....
 ```
 
+<<<<<<< HEAD
 
 ## RDS creation
 
@@ -255,3 +256,6 @@ To then run outstanding migrations:
 ```
  goose up
 ```
+
+# Docker Repositories
+docker run -d   --name watchtower   -v /var/run/docker.sock:/var/run/docker.sock   centurylink/watchtower
