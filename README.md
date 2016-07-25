@@ -126,6 +126,8 @@ Last IP	10.0.1.255
 Total Host	512
 ```
   * if another needs to be created then it should be as such:
+
+`aws ec2 create-subnet --vpc-id $vpcId --cidr-block 10.0.2.0/23 --availability-zone ap-southeast-2b`
 `10.0.2.0/23`
 ```
 CIDR Range	10.0.2.0/23
@@ -135,6 +137,7 @@ First IP	10.0.2.0
 Last IP	10.0.3.255
 Total Host	512
 ```
+resulted in `subnet-ee0df38a`
 
 * creating a routing table, this is needed to route traffic
 ```
@@ -156,6 +159,7 @@ aws ec2 create-route --route-table-id $routeTableId --destination-cidr-block 0.0
 ```
 aws ec2 create-security-group --group-name test-seav-security-group --description "Security group for testing" --vpc-id $vpcId
 ```
+securityGroupId=sg-fcfe4698
 ```
 securityGroupId=`aws ec2 create-security-group --group-name test-seav-security-group --description "Security group for testing" --vpc-id $vpcId  --query 'GroupId' --output text`
 ```
@@ -171,12 +175,15 @@ aws ec2 authorize-security-group-ingress --group-id $securityGroupId --protocol 
 ```
 docker-machine create --driver amazonec2 --amazonec2-region ap-southeast-2 --amazonec2-vpc-id $vpcId --amazonec2-subnet-id $subnetId --amazonec2-security-group $securityGroupName test-seav-container-host
 ```
-### hook up to that insstance
+### hook up to that instance
 * set the needed env vars
 ```
 docker-machine env test-seav-container-host
 eval $(docker-machine env test-seav-container-host)
 ```
+if there are any connection issues
+`docker-machine regenerate-certs test-seav-container-host`
+
 * check it is working
 ```
 docker-machine ls
@@ -206,20 +213,39 @@ docker-machine rm container-host
 
 ## RDS creation
 
-### security group
+### subnet group
+```
+aws rds create-db-subnet-group \
+--db-subnet-group-name test-seav-db-subnet-group \
+--db-subnet-group-description "Subnet group for testing database" \
+--subnet-ids subnet-4b09373c subnet-ee0df38a
+```
+### db instance
+* create a database instance
+```
+aws rds create-db-instance \
+  --db-name docker_test_developement \
+  --db-instance-identifier seav-test-db-instance \
+  --allocated-storage 5 \
+  --vpc-security-group-ids sg-fcfe4698 \
+  --db-instance-class db.m1.small \
+  --db-subnet-group-name test-seav-db-subnet-group \
+  --engine postgres \
+  --engine-version 9.4 \
+  --master-username root \
+  --master-user-password xxxx
+```
+* have a look
+`aws rds describe-db-instances`
 
-aws ec2 create-security-group --group-name test-seav-db-security-group --description "Security group for testing database" --vpc-id $vpcId
-securityGroupDBId=xxxxx
-aws ec2 authorize-security-group-ingress --group-id $securityGroupId --protocol tcp --port 5432 --cidr 10.0.0.0/22
-aws rds create-db-instance --db-name SeavTest --db-instance-identifier test-seav-db --allocated-storage 5 --db-instance-class db.t1.micro --engine POSTGRES --master-username root --master-user-password somepassword --vpc-security-group-ids $securityGroupDBId
-aws rds describe-db-instances
-
-______________________
-aws ec2 modify-instance-attribute \
-    --instance-id i-95bd36aa \
-    --groups sg-8a051ee8 sg-c53b20a7
-______________________
-
+### test it
+* ssh via docker-machine
+`docker-machine ssh test-seav-container-host`
+* install psql client
+`sudo apt-get update && sudo apt-get upgrade`
+`sudo apt-get install postgresql-client`
+* attempt to connect
+`psql -h test-seav-db.cmtsrxlj8h6c.ap-southeast-2.rds.amazonaws.com -U root -W -p 5432 -d docker_test`
 
 ## Database migrations
 
