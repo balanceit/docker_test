@@ -1,5 +1,5 @@
-IMAGE_NAME ?= docker_test
-CONTAINER_NAME ?= go_web_server
+IMAGE_NAME ?= testing_image
+CONTAINER_NAME ?= testing_container
 GBGOPATH ?= $(shell pwd):$(shell pwd)/vendor
 CONTAINER_PGPORT ?= 5432
 CONTAINER_PGHOST ?= 10.0.2.2
@@ -24,6 +24,7 @@ build-linux: clean bindata
 	ls -la bin
 
 clean:
+	if [ -a src/main/bindata.go ]; then rm -f src/main/bindata.go; fi;
 	if [ -a bin ]; then rm -rf bin; fi;
 	if [ -a pkg ]; then rm -rf pkg; fi;
 
@@ -31,13 +32,11 @@ docker-image:
 	docker build -t $(IMAGE_NAME) .
 
 docker-run:
-	docker run --rm -it -p 8000:8080 \
-							-e PGHOST=$(CONTAINER_PGHOST) \
-							-e PGPORT=$(CONTAINER_PGPORT) \
-							--log-driver json-file --name $(CONTAINER_NAME) $(IMAGE_NAME)
+	docker run --rm -it -p 8000:8080 -e DB_CONNECTION_STRING=$(DB_CONNECTION_STRING) --log-driver json-file --name testing_image testing_container
 
 docker-run-daemon:
-	docker run -d -p 8000:8080 -e PGHOST=$(CONTAINER_PGHOST) --log-driver json-file --name  $(CONTAINER_NAME) $(IMAGE_NAME)
+	docker run -d -p 8000:8080 -e DB_CONNECTION_STRING=$(DB_CONNECTION_STRING) --log-driver json-file --name testing_image testing_container
+	#docker run -d -p 8000:8080 -e PGHOST=$(CONTAINER_PGHOST) --log-driver json-file --name  $(CONTAINER_NAME) $(IMAGE_NAME)
 
 test:
 	bash test.sh

@@ -2,6 +2,8 @@ package main
 
 import(
   "log"
+  "os"
+  "fmt"
   "encoding/json"
   "net/http"
   "runtime"
@@ -77,16 +79,18 @@ func indexHandler(client *sql.DB) func(w http.ResponseWriter, r *http.Request) {
 
 func main(){
 
-  client, err := sql.Open("postgres", "dbname=docker_test_developement user=postgres password='' sslmode=disable")
+  fmt.Println("connection string: ", os.Getenv("DB_CONNECTION_STRING"))
+  client, err := sql.Open("postgres", os.Getenv("DB_CONNECTION_STRING"))
   if err != nil {
     log.Fatal("cannot connect to database: ", err)
   }
   log.Println("connected to database")
-
+  
   if err2 := client.Ping(); err2 != nil {
    log.Println("Failed to keep connection alive")
   }
 
+  log.Println("before running migrations")
   n, err := migrate.Exec(client, "postgres", migrations(), migrate.Up)
   if err != nil {
       log.Fatal("db migrations failed: ", err)

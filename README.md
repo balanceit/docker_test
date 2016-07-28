@@ -201,7 +201,7 @@ docker build -t testing_image .
 ```
 * run the container
 ```
-docker run -d -p 8000:8080 --log-driver json-file --name testing_container testing_image
+docker run -d -p 8000:8080 -e DB_CONNECTION_STRING="dbname=docker_test_developement user=root password=xxx sslmode=disable" --log-driver json-file --name testing_container testing_image
 ```
 
 ### shutdown and clean up
@@ -233,7 +233,7 @@ aws rds create-db-instance \
   --engine postgres \
   --engine-version 9.4 \
   --master-username root \
-  --master-user-password xxxx
+  --master-user-password xxx
 ```
 * have a look
 `aws rds describe-db-instances`
@@ -245,7 +245,7 @@ aws rds create-db-instance \
 `sudo apt-get update && sudo apt-get upgrade`
 `sudo apt-get install postgresql-client`
 * attempt to connect
-`psql -h test-seav-db.cmtsrxlj8h6c.ap-southeast-2.rds.amazonaws.com -U root -W -p 5432 -d docker_test`
+`psql -h test-seav-db.cmtsrxlj8h6c.ap-southeast-2.rds.amazonaws.com -U root -W -p 5432 -d docker_test_developement`
 
 ## Database migrations
 
