@@ -3,7 +3,7 @@ CONTAINER_NAME ?= testing_container
 GBGOPATH ?= $(shell pwd):$(shell pwd)/vendor
 CONTAINER_PGPORT ?= 5432
 CONTAINER_PGHOST ?= 10.0.2.2
-DB_CONNECTION_STRING ?= "dbname=docker_test_developement user=postgres"
+DB_CONNECTION_STRING ?= "dbname=docker_test_developement user=postgres sslmode=disable"
 
 .DEFAULT_GOAL := run
 
@@ -36,7 +36,7 @@ docker-run:
 
 docker-run-daemon:
 	@echo $(DB_CONNECTION_STRING)
-	docker run -d -p 8000:8080 -e DB_CONNECTION_STRING="dbname=docker_test_developement user=postgres" -e PGHOST=${CONTAINER_PGHOST} --log-driver json-file --name  $(CONTAINER_NAME) $(IMAGE_NAME)
+	docker run -d -p 8000:8080 -e DB_CONNECTION_STRING="dbname=docker_test_developement user=postgres sslmode=disable" -e PGHOST=${CONTAINER_PGHOST} --log-driver json-file --name  $(CONTAINER_NAME) $(IMAGE_NAME)
 	# docker run -d -p 8000:8080 -e DB_CONNECTION_STRING=$(DB_CONNECTION_STRING) -e PGHOST=${CONTAINER_PGHOST} --log-driver json-file --name  $(CONTAINER_NAME) $(IMAGE_NAME)
 	#docker run -d -p 8000:8080 -e PGHOST=$(CONTAINER_PGHOST) --log-driver json-file --name  $(CONTAINER_NAME) $(IMAGE_NAME)
 

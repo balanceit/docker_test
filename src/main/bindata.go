@@ -107,7 +107,7 @@ func dbMigrations2_create_show_tableSql() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "db/migrations/2_create_show_table.sql", size: 132, mode: os.FileMode(420), modTime: time.Unix(1469696325, 0)}
+	info := bindataFileInfo{name: "db/migrations/2_create_show_table.sql", size: 132, mode: os.FileMode(420), modTime: time.Unix(1470130969, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
@@ -127,7 +127,7 @@ func dbMigrations3_create_bob_tableSql() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "db/migrations/3_create_bob_table.sql", size: 130, mode: os.FileMode(420), modTime: time.Unix(1469696528, 0)}
+	info := bindataFileInfo{name: "db/migrations/3_create_bob_table.sql", size: 130, mode: os.FileMode(420), modTime: time.Unix(1470130969, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
@@ -147,7 +147,7 @@ func dbMigrations4_create_sue_tableSql() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "db/migrations/4_create_sue_table.sql", size: 130, mode: os.FileMode(420), modTime: time.Unix(1469698848, 0)}
+	info := bindataFileInfo{name: "db/migrations/4_create_sue_table.sql", size: 130, mode: os.FileMode(420), modTime: time.Unix(1470130969, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
@@ -167,7 +167,7 @@ func dbMigrations5_create_jerry_tableSql() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "db/migrations/5_create_jerry_table.sql", size: 134, mode: os.FileMode(420), modTime: time.Unix(1469698845, 0)}
+	info := bindataFileInfo{name: "db/migrations/5_create_jerry_table.sql", size: 134, mode: os.FileMode(420), modTime: time.Unix(1470130969, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
