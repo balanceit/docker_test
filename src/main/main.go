@@ -97,8 +97,10 @@ func main(){
   }
   log.Println(n, "migrations run")
 
-  log.SetPrefix("web_server:")
+  // log.SetPrefix("web_server:")
+  log.Println("before root handler")
   http.HandleFunc("/", indexHandler(client))
+  log.Println("before listen and serve")
   http.ListenAndServe(":8080",nil)
   log.Println("running on port 8080")
 
