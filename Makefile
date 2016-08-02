@@ -3,7 +3,7 @@ CONTAINER_NAME ?= testing_container
 GBGOPATH ?= $(shell pwd):$(shell pwd)/vendor
 CONTAINER_PGPORT ?= 5432
 CONTAINER_PGHOST ?= 10.0.2.2
-
+DB_CONNECTION_STRING ?= dbname=docker_test_developement
 
 .DEFAULT_GOAL := run
 
@@ -32,10 +32,10 @@ docker-image:
 	docker build -t $(IMAGE_NAME) .
 
 docker-run:
-	docker run --rm -it -p 8000:8080 -e DB_CONNECTION_STRING=$(DB_CONNECTION_STRING) --log-driver json-file --name testing_container testing_image
+	docker run --rm -it -p 8000:8080 -e DB_CONNECTION_STRING=$(DB_CONNECTION_STRING) -e PGHOST=${CONTAINER_PGHOST} --log-driver json-file --name testing_container testing_image
 
 docker-run-daemon:
-	docker run -d -p 8000:8080 -e DB_CONNECTION_STRING=$(DB_CONNECTION_STRING) --log-driver json-file --name testing_container testing_image
+	docker run -d -p 8000:8080 -e DB_CONNECTION_STRING=$(DB_CONNECTION_STRING) -e PGHOST=${CONTAINER_PGHOST} --log-driver json-file --name testing_container testing_image
 	#docker run -d -p 8000:8080 -e PGHOST=$(CONTAINER_PGHOST) --log-driver json-file --name  $(CONTAINER_NAME) $(IMAGE_NAME)
 
 test:
