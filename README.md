@@ -201,7 +201,7 @@ docker build -t testing_image .
 ```
 * run the container
 ```
-docker run -d -p 8000:8080 -e DB_CONNECTION_STRING="dbname=docker_test_developement user=root password=xxx sslmode=disable" --log-driver json-file --name testing_container testing_image
+docker run -d -p 8000:8080 -e DB_CONNECTION_STRING="dbname=docker_test_developement user=root password=xxx" -e PGHOST="10.0.1.35" --log-driver json-file --name testing_container faroeseav/docker_test
 ```
 
 ### shutdown and clean up
