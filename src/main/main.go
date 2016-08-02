@@ -85,9 +85,9 @@ func main(){
     log.Fatal("cannot connect to database: ", err)
   }
   log.Println("connected to database")
-  
+
   if err2 := client.Ping(); err2 != nil {
-   log.Println("Failed to keep connection alive")
+   log.Println("Failed to keep connection alive", err2)
   }
 
   log.Println("before running migrations")
