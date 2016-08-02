@@ -3,7 +3,8 @@ CONTAINER_NAME ?= testing_container
 GBGOPATH ?= $(shell pwd):$(shell pwd)/vendor
 CONTAINER_PGPORT ?= 5432
 CONTAINER_PGHOST ?= 10.0.2.2
-DB_CONNECTION_STRING ?= dbname=docker_test_developement
+DB_CONNECTION_STRING ?= dbname=docker_test_developement user=postgres
+TMPDIR ?= "/tmp"
 
 .DEFAULT_GOAL := run
 
@@ -42,3 +43,6 @@ test:
 	bash test.sh
 
 dbcreate:
+
+test1:
+	@echo $(TMPDIR)
