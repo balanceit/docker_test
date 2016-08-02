@@ -17,6 +17,7 @@ before_script:
 
 install:
   - psql -c 'create database docker_test_developement;' -U postgres
+  - psql -c "select * from pg_settings where name like '%address%'"
   - go get -u github.com/jteeuwen/go-bindata/...
 
   # not using gb atm as it does not have support for static linking
