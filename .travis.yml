@@ -16,7 +16,7 @@ before_script:
   - ifconfig
 
 install:
-  - psql -c 'create database docker_test_developement;' -U postgres -h 127.0.0.1
+  - psql -c 'create database docker_test_developement;' -U postgres -h 127.0.0.1 -p 5432
   - go get -u github.com/jteeuwen/go-bindata/...
 
   # not using gb atm as it does not have support for static linking
