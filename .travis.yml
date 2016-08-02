@@ -32,3 +32,5 @@ script:
   - docker ps | grep -q testing_container
   - make test1
   - make test
+  - docker ps -a
+  - docker logs testing_container
