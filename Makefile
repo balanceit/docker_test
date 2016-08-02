@@ -32,10 +32,10 @@ docker-image:
 	docker build -t $(IMAGE_NAME) .
 
 docker-run:
-	docker run --rm -it -p 8000:8080 -e DB_CONNECTION_STRING=$(DB_CONNECTION_STRING) --log-driver json-file --name testing_image testing_container
+	docker run --rm -it -p 8000:8080 -e DB_CONNECTION_STRING=$(DB_CONNECTION_STRING) --log-driver json-file --name testing_container testing_image
 
 docker-run-daemon:
-	docker run -d -p 8000:8080 -e DB_CONNECTION_STRING=$(DB_CONNECTION_STRING) --log-driver json-file --name testing_image testing_container
+	docker run -d -p 8000:8080 -e DB_CONNECTION_STRING=$(DB_CONNECTION_STRING) --log-driver json-file --name testing_container testing_image
 	#docker run -d -p 8000:8080 -e PGHOST=$(CONTAINER_PGHOST) --log-driver json-file --name  $(CONTAINER_NAME) $(IMAGE_NAME)
 
 test:
