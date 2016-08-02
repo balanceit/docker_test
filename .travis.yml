@@ -28,6 +28,9 @@ install:
   - docker logs testing_container
   - psql -c "select table_name from information_schema.tables where table_schema= 'public';" -U postgres -h 127.0.0.1 -p 5432 -d docker_test_developement
 
+before_script:
+  - sleep 10
+
 script:
   - docker ps -a
   - docker ps | grep -q testing_container
