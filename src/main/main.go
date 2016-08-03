@@ -101,8 +101,8 @@ func main(){
   log.Println("before root handler")
   http.HandleFunc("/", indexHandler(client))
   log.Println("before listen and serve")
-  //http.ListenAndServe(":8080",nil)
-  log.Fatal(http.ListenAndServe(":8080", nil))
+  http.ListenAndServe(":8080",nil)
+  //log.Fatal(http.ListenAndServe(":8080", nil))
   log.Println("running on port 8080")
 
 }
