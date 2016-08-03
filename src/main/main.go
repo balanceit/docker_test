@@ -9,6 +9,7 @@ import(
   "runtime"
   "github.com/rubenv/sql-migrate"
 	"database/sql"
+  "reflect"
 
 	_ "github.com/lib/pq"
 )
@@ -79,8 +80,10 @@ func indexHandler(client *sql.DB) func(w http.ResponseWriter, r *http.Request) {
 
 func main(){
 
-  fmt.Println("connection string: ", os.Getenv("DB_CONNECTION_STRING"))
+  log.Println("connection string: ", os.Getenv("DB_CONNECTION_STRING"))
+  log.Println("pg host: ", os.Getenv("PGHOST"))
   client, err := sql.Open("postgres", os.Getenv("DB_CONNECTION_STRING"))
+  log.Println("type of client: ", reflect.TypeOf(client))
   if err != nil {
     log.Fatal("cannot connect to database: ", err)
   }
