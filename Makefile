@@ -36,6 +36,7 @@ docker-run:
 
 docker-run-daemon:
 	@echo $(DB_CONNECTION_STRING)
+	@echo $(CONTAINER_PGHOST)
 	/sbin/ip route|awk '/default/ { print $3 }'
 	docker run -d -p 8000:8080 -e DB_CONNECTION_STRING="dbname=docker_test_developement user=postgres sslmode=disable" -e PGHOST=${CONTAINER_PGHOST} --log-driver json-file --name  $(CONTAINER_NAME) $(IMAGE_NAME)
 	# docker run -d -p 8000:8080 -e DB_CONNECTION_STRING="$(DB_CONNECTION_STRING)" -e PGHOST=${CONTAINER_PGHOST} --log-driver json-file --name  $(CONTAINER_NAME) $(IMAGE_NAME)
