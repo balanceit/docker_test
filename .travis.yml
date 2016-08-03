@@ -22,6 +22,7 @@ install:
 
   # not using gb atm as it does not have support for static linking
   #- go get github.com/constabulary/gb/...
+  - ifconfig
   - make build-linux
   - make docker-image
   - make docker-run-daemon
