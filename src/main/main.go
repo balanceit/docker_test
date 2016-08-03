@@ -27,12 +27,12 @@ func indexHandler() func(w http.ResponseWriter, r *http.Request) {
     return func(w http.ResponseWriter, r *http.Request) {
     log.Println("indexHandler")
 
-    tables, err := listTables(client)
-    if err != nil {
-      http.Error(w, err.Error(), http.StatusInternalServerError)
-      return
-    }
-    log.Println(tables)
+    //tables, err := listTables(client)
+    //if err != nil {
+    //  http.Error(w, err.Error(), http.StatusInternalServerError)
+    //  return
+    //}
+    //log.Println(tables)
     //res := Response{"OK", runtime.GOOS, runtime.GOARCH, tables }
     res := Response{"OK", runtime.GOOS, runtime.GOARCH, []string{"testing"} }
 
