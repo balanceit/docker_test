@@ -6,7 +6,7 @@ import(
   "encoding/json"
   "net/http"
   "runtime"
-  "github.com/rubenv/sql-migrate"
+  // "github.com/rubenv/sql-migrate"
 	"database/sql"
   "reflect"
 
@@ -44,13 +44,13 @@ func listTables(c *sql.DB) ([]string, error){
   return tables, nil
 }
 
-func migrations() migrate.MigrationSource {
-        return &migrate.AssetMigrationSource{
-                Asset:    Asset,
-                AssetDir: AssetDir,
-                Dir:      "db/migrations",
-        }
-}
+// func migrations() migrate.MigrationSource {
+//         return &migrate.AssetMigrationSource{
+//                 Asset:    Asset,
+//                 AssetDir: AssetDir,
+//                 Dir:      "db/migrations",
+//         }
+// }
 
 func indexHandler(client *sql.DB) func(w http.ResponseWriter, r *http.Request) {
     return func(w http.ResponseWriter, r *http.Request) {
@@ -94,12 +94,12 @@ func main(){
   }
   log.Println("after ping")
 
-  log.Println("before running migrations")
-  n, err := migrate.Exec(client, "postgres", migrations(), migrate.Up)
-  if err != nil {
-      log.Fatal("db migrations failed: ", err)
-  }
-  log.Println(n, "migrations run")
+  // log.Println("before running migrations")
+  // n, err := migrate.Exec(client, "postgres", migrations(), migrate.Up)
+  // if err != nil {
+  //     log.Fatal("db migrations failed: ", err)
+  // }
+  // log.Println(n, "migrations run")
 
   // log.SetPrefix("web_server:")
   log.Println("before root handler")
