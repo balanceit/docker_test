@@ -88,6 +88,11 @@ func main(){
   }
   log.Println("connected to database")
 
+  tables, err := listTables(client)
+  if err != nil {
+    log.Fatal("table list failed: ", err)
+  }
+  log.Println(tables)
   log.Println("before ping")
   if err2 := client.Ping(); err2 != nil {
    log.Println("Failed to keep connection alive", err2)
