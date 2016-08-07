@@ -63,8 +63,8 @@ func indexHandler(client *sql.DB) func(w http.ResponseWriter, r *http.Request) {
       return
     }
     log.Println("tables -----" , tables)
-    // res := Response{"OK", runtime.GOOS, runtime.GOARCH, tables }
-    res := Response{"OK", runtime.GOOS, runtime.GOARCH, []string{"testing"} }
+    res := Response{"OK", runtime.GOOS, runtime.GOARCH, tables }
+    //res := Response{"OK", runtime.GOOS, runtime.GOARCH, []string{"testing"} }
 
     js, err := json.Marshal(res)
     if err != nil {
