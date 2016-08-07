@@ -15,13 +15,12 @@ sudo: required
 before_install:
   - echo "listen_addresses = '*'" | sudo tee -a /etc/postgresql/9.4/main/postgresql.conf
   - echo "host all all 0.0.0.0/0 trust" | sudo tee -a /etc/postgresql/9.4/main/pg_hba.conf
-  - sudo cat /etc/postgresql/9.4/main/postgresql.conf
-  - sudo cat /etc/postgresql/9.4/main/pg_hba.conf
+  # - sudo cat /etc/postgresql/9.4/main/postgresql.conf
+  # - sudo cat /etc/postgresql/9.4/main/pg_hba.conf
   - sudo service postgresql restart
 
 install:
   - psql -c 'create database docker_test_developement;' -U postgres -h 127.0.0.1 -p 5432
-  - psql -c "select table_name from information_schema.tables where table_schema= 'public';" -U postgres -h 127.0.0.1 -p 5432 -d docker_test_developement
   - go get -u github.com/jteeuwen/go-bindata/...
 
   # not using gb atm as it does not have support for static linking
@@ -34,22 +33,15 @@ install:
 
 before_script:
   - sleep 10
-  - /sbin/ip route|awk '/default/ { print $3 }'
-  - /sbin/ip route show 0.0.0.0/0 | grep -Eo 'via \S+' | awk '{ print $2 }'
-  - /sbin/ip route get 1.1.1.1 | grep -Eo 'via \S+' | awk '{ print $2 }'
-  - /sbin/ip route show | grep docker0 | awk '{print $9}'
-  - /sbin/ip route
-  - ifconfig
 
 script:
   - docker ps -a
   - make test
   - docker logs testing_container
-  - psql -c "select table_name from information_schema.tables where table_schema= 'public';" -U postgres -h 127.0.0.1 -p 5432 -d docker_test_developement
 
 
 after_success:
   - if [ "$TRAVIS_BRANCH" == "master" ]; then
     docker login -u $DOCKER_HUB_USER -p $DOCKER_HUB_PASS;
-    docker push $CONTAINER_NAME
+    docker push $CONTAINER_NAME;
     fi
