@@ -86,18 +86,19 @@ func main(){
   if err != nil {
     log.Fatal("cannot connect to database: ", err)
   }
-  log.Println("connected to database")
+  log.Println("client created")
+
+  log.Println("before ping")
+  if err2 := client.Ping(); err2 != nil {
+   log.Println("Failed to keep connection alive", err2)
+  }
+  log.Println("after ping")
 
   tables, err := listTables(client)
   if err != nil {
     log.Fatal("table list failed: ", err)
   }
   log.Println(tables)
-  log.Println("before ping")
-  if err2 := client.Ping(); err2 != nil {
-   log.Println("Failed to keep connection alive", err2)
-  }
-  log.Println("after ping")
 
   // log.Println("before running migrations")
   // n, err := migrate.Exec(client, "postgres", migrations(), migrate.Up)
