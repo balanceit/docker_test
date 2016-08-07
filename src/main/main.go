@@ -44,13 +44,13 @@ func listTables(c *sql.DB) ([]string, error){
   return tables, nil
 }
 
-// func migrations() migrate.MigrationSource {
-//         return &migrate.AssetMigrationSource{
-//                 Asset:    Asset,
-//                 AssetDir: AssetDir,
-//                 Dir:      "db/migrations",
-//         }
-// }
+func migrations() migrate.MigrationSource {
+        return &migrate.AssetMigrationSource{
+                Asset:    Asset,
+                AssetDir: AssetDir,
+                Dir:      "db/migrations",
+        }
+}
 
 
 func indexHandler(client *sql.DB) func(w http.ResponseWriter, r *http.Request) {
