@@ -63,9 +63,9 @@ func indexHandler(client *sql.DB) func(w http.ResponseWriter, r *http.Request) {
       http.Error(w, err.Error(), http.StatusInternalServerError)
       return
     }
-    log.Println(tables)
-    res := Response{"OK", runtime.GOOS, runtime.GOARCH, tables }
-    // res := Response{"OK", runtime.GOOS, runtime.GOARCH, []string{"testing"} }
+    log.Println("tables -----" , tables)
+    // res := Response{"OK", runtime.GOOS, runtime.GOARCH, tables }
+    res := Response{"OK", runtime.GOOS, runtime.GOARCH, []string{"testing"} }
 
     js, err := json.Marshal(res)
     if err != nil {
@@ -113,7 +113,6 @@ func main(){
   http.HandleFunc("/", indexHandler(client))
   log.Println("before listen and serve")
   http.ListenAndServe(":8080",nil)
-  //log.Fatal(http.ListenAndServe(":8080", nil))
   log.Println("running on port 8080")
 
 }
