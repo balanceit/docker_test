@@ -2,6 +2,7 @@ package main
 
 import(
   "log"
+  "net"
   "os"
   "encoding/json"
   "net/http"
@@ -78,6 +79,19 @@ func indexHandler(client *sql.DB) func(w http.ResponseWriter, r *http.Request) {
 }
 
 func main(){
+
+
+
+  var status string
+  conn, err := net.Dial("tcp", "172.17.42.1:5432")
+  if err != nil {
+          log.Println("Connection error:", err)
+          status = "Unreachable"
+  } else {
+          status = "Online"
+          defer conn.Close()
+  }
+  log.Println(status)
 
   log.Println("connection string: ", os.Getenv("DB_CONNECTION_STRING"))
   log.Println("pg host: ", os.Getenv("PGHOST"))
