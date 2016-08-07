@@ -2,7 +2,6 @@ package main
 
 import(
   "log"
-  "net"
   "os"
   "encoding/json"
   "net/http"
