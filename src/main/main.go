@@ -53,6 +53,19 @@ func listTables(c *sql.DB) ([]string, error){
 //         }
 // }
 
+func checkport(c string) {
+  var status string
+  conn, err := net.Dial("tcp", c)
+  if err != nil {
+          log.Println("Connection error:", err)
+          status = "Unreachable"
+  } else {
+          status = "Online"
+          conn.Close()
+  }
+  log.Println(c, status)
+}
+
 func indexHandler(client *sql.DB) func(w http.ResponseWriter, r *http.Request) {
     return func(w http.ResponseWriter, r *http.Request) {
     log.Println("indexHandler")
@@ -79,19 +92,8 @@ func indexHandler(client *sql.DB) func(w http.ResponseWriter, r *http.Request) {
 }
 
 func main(){
-
-
-
-  var status string
-  conn, err := net.Dial("tcp", "172.17.42.1:5432")
-  if err != nil {
-          log.Println("Connection error:", err)
-          status = "Unreachable"
-  } else {
-          status = "Online"
-          defer conn.Close()
-  }
-  log.Println(status)
+  checkport("172.17.42.1:5432")
+  checkport("10.128.0.1:5432")
 
   log.Println("connection string: ", os.Getenv("DB_CONNECTION_STRING"))
   log.Println("pg host: ", os.Getenv("PGHOST"))
