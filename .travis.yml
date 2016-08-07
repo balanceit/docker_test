@@ -17,6 +17,7 @@ before_install:
   - echo "host all all 0.0.0.0/0 trust" | sudo tee -a /etc/postgresql/9.4/main/pg_hba.conf
   - sudo cat /etc/postgresql/9.4/main/postgresql.conf
   - sudo cat /etc/postgresql/9.4/main/pg_hba.conf
+  - sudo service postgresql restart
 
 install:
   - psql -c 'create database docker_test_developement;' -U postgres -h 127.0.0.1 -p 5432
