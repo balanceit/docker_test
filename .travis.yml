@@ -13,35 +13,36 @@ addons:
 sudo: required
 
 before_install:
-  - echo "listen_addresses = '*'" | sudo tee -a /etc/postgresql/9.*/main/postgresql.conf
-  - echo "host all all 0.0.0.0/0 trust" | sudo tee -a /etc/postgresql/9.*/main/pg_hba.conf
-  - sudo service postgresql restart
+  - sudo docker login -u="$DOCKER_HUB_USER" -p="$DOCKER_HUB_PASS";
+  # - echo "listen_addresses = '*'" | sudo tee -a /etc/postgresql/9.*/main/postgresql.conf
+  # - echo "host all all 0.0.0.0/0 trust" | sudo tee -a /etc/postgresql/9.*/main/pg_hba.conf
+  # - sudo service postgresql restart
   # - sudo cat /etc/postgresql/9.4/main/postgresql.conf
   # - sudo cat /etc/postgresql/9.4/main/pg_hba.conf
-
-install:
-  - psql -c 'create database docker_test_developement;' -U postgres -h 127.0.0.1 -p 5432
-  - go get -u github.com/jteeuwen/go-bindata/...
-
-  # not using gb atm as it does not have support for static linking
-  #- go get github.com/constabulary/gb/...
-  - make build-linux
-  - make docker-image
-  - make docker-run-daemon
-  - docker logs $CONTAINER_NAME
-  - psql -c "select table_name from information_schema.tables where table_schema= 'public';" -U postgres -h 127.0.0.1 -p 5432 -d docker_test_developement
-
-before_script:
-  # - sleep 10
-
-script:
-  - docker ps -a
-  - make test
-  - docker logs testing_container
-
-
-after_success:
-  - if [ "$TRAVIS_BRANCH" == "master" ]; then
-    sudo docker login -u="$DOCKER_HUB_USER" -p="$DOCKER_HUB_PASS";
-    docker push $IMAGE_NAME;
-    fi
+#
+# install:
+#   - psql -c 'create database docker_test_developement;' -U postgres -h 127.0.0.1 -p 5432
+#   - go get -u github.com/jteeuwen/go-bindata/...
+#
+#   # not using gb atm as it does not have support for static linking
+#   #- go get github.com/constabulary/gb/...
+#   - make build-linux
+#   - make docker-image
+#   - make docker-run-daemon
+#   - docker logs $CONTAINER_NAME
+#   - psql -c "select table_name from information_schema.tables where table_schema= 'public';" -U postgres -h 127.0.0.1 -p 5432 -d docker_test_developement
+#
+# before_script:
+#   # - sleep 10
+#
+# script:
+#   - docker ps -a
+#   - make test
+#   - docker logs testing_container
+#
+#
+# after_success:
+#   - if [ "$TRAVIS_BRANCH" == "master" ]; then
+#     sudo docker login -u="$DOCKER_HUB_USER" -p="$DOCKER_HUB_PASS";
+#     docker push $IMAGE_NAME;
+#     fi
