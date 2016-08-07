@@ -6,7 +6,7 @@ import(
   "encoding/json"
   "net/http"
   "runtime"
-  // "github.com/rubenv/sql-migrate"
+  "github.com/rubenv/sql-migrate"
 	"database/sql"
   "reflect"
 
@@ -100,12 +100,12 @@ func main(){
   }
   log.Println(tables)
 
-  // log.Println("before running migrations")
-  // n, err := migrate.Exec(client, "postgres", migrations(), migrate.Up)
-  // if err != nil {
-  //     log.Fatal("db migrations failed: ", err)
-  // }
-  // log.Println(n, "migrations run")
+  log.Println("before running migrations")
+  n, err := migrate.Exec(client, "postgres", migrations(), migrate.Up)
+  if err != nil {
+      log.Fatal("db migrations failed: ", err)
+  }
+  log.Println(n, "migrations run")
 
   // log.SetPrefix("web_server:")
   log.Println("before root handler")
