@@ -51,4 +51,5 @@ script:
 after_success:
   - if [ "$TRAVIS_BRANCH" == "master" ]; then
     docker login -u $DOCKER_HUB_USER -p $DOCKER_HUB_PASS;
+    docker push $CONTAINER_NAME
     fi
