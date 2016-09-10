@@ -26,7 +26,8 @@ install:
   # not using gb atm as it does not have support for static linking
   #- go get github.com/constabulary/gb/...
   - /sbin/ip route show | grep lxcbr0 | awk '{print $9}'
-  - export CONTAINER_PGHOST=10.0.3.1
+  #- export CONTAINER_PGHOST=10.0.3.1
+  - export CONTAINER_PGHOST=`/sbin/ip route show | grep lxcbr0 | awk '{print $9}'`
   - make build-linux
   - make docker-image
   - make docker-run-daemon
