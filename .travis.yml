@@ -25,7 +25,7 @@ install:
   - go get -u github.com/jteeuwen/go-bindata/...
   # not using gb atm as it does not have support for static linking
   #- go get github.com/constabulary/gb/...
-  - /sbin/ip route show | grep lxcbr0 | awk '{print \$9}'
+  - /sbin/ip route show | grep lxcbr0 | awk '{print $9}'
   - export CONTAINER_PGHOST=10.0.3.1
   - make build-linux
   - make docker-image
